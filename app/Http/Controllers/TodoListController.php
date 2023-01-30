@@ -1,15 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers;
 
 use App\Events\TaskReceived;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreToDoListRequest;
 use App\Http\Requests\UpdateToDoListRequest;
 use App\Models\TodoList;
 use App\Traits\ApiResponser;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class TodoListController extends Controller
 {
@@ -22,9 +19,7 @@ class TodoListController extends Controller
      */
     public function index()
     {
-//        TaskReceived::dispatch();
-
-        return $this->successResponse(['tasks' => TodoList::completed(false)->get()], 'TodoList created successfully.',);
+        return $this->successResponse(['tasks' => TodoList::orderBy('status')->completed(false)->get()], 'TodoList created successfully.',);
     }
 
     /**
@@ -35,9 +30,12 @@ class TodoListController extends Controller
      */
     public function store(StoreToDoListRequest $request)
     {
-        $todoList = TodoList::create($request->all());
-        event(new TaskReceived($todoList));
-        return $this->successResponse($todoList, 'TodoList created successfully.',);
+
+        $todo = $request->user()->todos()->create($request->all());
+
+        event(new TaskReceived($todo));
+
+        return $this->successResponse($todo, 'TodoList created successfully.',);
     }
 
     public function update(UpdateToDoListRequest $request, $id)

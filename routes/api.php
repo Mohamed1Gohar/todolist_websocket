@@ -1,10 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\V1\Auth\PassportAuthController;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\V1\TodoListController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,13 +19,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
 Route::group(['prefix' => 'v1'], function () {
 
     Route::post('login', [PassportAuthController::class, 'login']);
     Route::post('register', [PassportAuthController::class, 'register']);
-
-    Route::resource('tasks', TodoListController::class, ['except' => ['create', 'edit', 'show']]);
 
     Route::middleware('auth:api')->group(function () {
 

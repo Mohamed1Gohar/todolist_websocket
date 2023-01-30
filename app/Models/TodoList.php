@@ -24,4 +24,9 @@ class TodoList extends Model
     {
         return $query->where('completed', $completed);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id');
+    }
 }

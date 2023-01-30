@@ -44,7 +44,7 @@ export default {
     },
     methods: {
         addTask() {
-            axios.post("api/v1/tasks", {
+            axios.post("tasks", {
                 title: this.task.title,
                 desc: this.task.desc,
                 })

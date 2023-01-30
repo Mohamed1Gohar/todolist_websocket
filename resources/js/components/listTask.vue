@@ -37,7 +37,7 @@ export default {
     props: ["task"],
     methods: {
         updateTask() {
-            axios.put(`api/v1/tasks/${this.task.id}`, {
+            axios.put(`tasks/${this.task.id}`, {
                     status: this.task.status,
                 })
                 .then(response => {
@@ -53,7 +53,7 @@ export default {
                 });
         },
         removeTask() {
-            axios.delete(`api/v1/tasks/${this.task.id}`)
+            axios.delete(`tasks/${this.task.id}`)
                 .then(res => {
                     if (res.status == 200) {
                         this.$emit("taskchanged");

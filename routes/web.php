@@ -1,8 +1,7 @@
 <?php
 
-use App\Events\Hello;
-use App\Http\Controllers\TodoListController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\TodoListController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -29,6 +28,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('home', 'index')->name('home');
         Route::get('todo-lists', 'todoLists')->name('todo-lists');
     });
+
+    Route::resource('tasks', TodoListController::class, ['except' => ['create', 'edit', 'show']]);
 });
 
 // for test

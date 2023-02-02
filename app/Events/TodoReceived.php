@@ -8,25 +8,25 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class TaskReceived implements ShouldBroadcast
+class TodoReceived implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    public $task;
+    public $todo;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($task = null)
+    public function __construct($todo = null)
     {
-        $this->task = $task;
+        $this->todo = $todo;
     }
 
 
     public function broadcastWith()
     {
         //echo"broadcastWith";
-        return ['task' => $this->task];
+        return ['todo' => $this->todo];
     }
 
     /**

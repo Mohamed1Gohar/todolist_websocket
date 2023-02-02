@@ -1,4 +1,4 @@
-## Tasks Management by Laravel, Vuejs, Websocket
+## Todos Management by Laravel, Vuejs, Websocket
 
 ### Run Project
 

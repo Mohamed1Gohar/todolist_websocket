@@ -7,16 +7,16 @@
         <div class="card">
             <div class="card-header">ToDo List Laravel & Vue & Websocket</div>
             <div class="card-body">
-                <list-view :tasks="tasks" v-on:reloadlist="getTasks()" class="text-center"/>
+                <list-view :todos="todos" v-on:reloadlist="getTodos()" class="text-center"/>
             </div>
         </div>
     </div>
 
     <div class="col-md-4">
         <div class="card">
-            <div class="card-header">Add Task</div>
+            <div class="card-header">Add Todo</div>
             <div class="card-body">
-                <add-task-form v-on:reloadlist="getTasks()" />
+                <add-todo-form v-on:reloadlist="getTodos()" />
             </div>
         </div>
     </div>
@@ -26,14 +26,14 @@
 <script>
 
 import HelloWorld from './components/Welcome.vue'
-import addTaskForm from './components/addTaskForm.vue'
+import addTodoForm from './components/addTodoForm.vue'
 import listView from './components/listView.vue'
 
 export default {
     name: 'App',
     components: {
         HelloWorld,
-        addTaskForm,
+        addTodoForm,
         listView
     },
     mounted(){
@@ -45,22 +45,22 @@ export default {
             console.log(e); // the data from the server
         })
 
-        window.Echo.channel('public').listen('TaskReceived',(e)=>{
+        window.Echo.channel('public').listen('TodoReceived',(e)=>{
             //code for displaying the serve data
-            this.getTasks();
+            this.getTodos();
         })
     },
     data: function() {
         return {
-            tasks: []
+            todos: []
         };
     },
     methods: {
-        getTasks() {
+        getTodos() {
             axios
-                .get("tasks")
+                .get("todos")
                 .then(response => {
-                    this.tasks = response.data.data.tasks;
+                    this.todos = response.data.data.todos;
                 })
                 .catch(error => {
                     console.log(error);
@@ -68,7 +68,7 @@ export default {
         }
     },
     created() {
-        this.getTasks();
+        this.getTodos();
     }
 }
 </script>

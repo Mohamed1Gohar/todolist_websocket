@@ -29,12 +29,5 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('todo-lists', 'todoLists')->name('todo-lists');
     });
 
-    Route::resource('tasks', TodoListController::class, ['except' => ['create', 'edit', 'show']]);
+    Route::resource('todos', TodoListController::class, ['except' => ['create', 'edit', 'show']]);
 });
-
-// for test
-//Route::get('/broadcasting',function(){
-//    return Hello::dispatch();
-//    broadcast(new Hello());
-//    return "Event has been sent!";
-//});

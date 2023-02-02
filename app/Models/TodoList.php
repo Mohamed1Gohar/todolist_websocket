@@ -8,9 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class TodoList extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'desc', 'status', 'completed'];
 
-    public function scopeUpdateTaskByStatus($query, $id, $status)
+    protected $fillable = ['user_id', 'title', 'desc', 'status', 'completed'];
+
+    public function scopeUpdateTodoByStatus($query, $id, $status)
     {
         if ($status == 'COMPLETED') {
             return $query->find($id)->update([

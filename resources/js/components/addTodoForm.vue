@@ -14,16 +14,16 @@
             <form>
                 <div class="form-group">
                     <label for="title">Email address</label>
-                    <input v-model="task.title" type="text" required class="form-control" id="title" aria-describedby="emailHelp" placeholder="Enter Title">
+                    <input v-model="todo.title" type="text" required class="form-control" id="title" aria-describedby="emailHelp" placeholder="Enter Title">
                 </div>
                 <div class="form-group">
                     <label for="description">Description </label>
-                    <textarea v-model="task.desc" class="form-control" id="description" rows="3" placeholder="Enter Description..."></textarea>
+                    <textarea v-model="todo.desc" class="form-control" id="description" rows="3" placeholder="Enter Description..."></textarea>
                 </div>
                 <div class="form-group">
                     <button
-                        :class="[task.title ? 'active' : 'inactive']"
-                        @click="addTask()"
+                        :class="[todo.title ? 'active' : 'inactive']"
+                        @click="addTodo()"
                         type="button"
                         class="btn btn-primary"
                     >Add +</button>
@@ -36,22 +36,22 @@
 export default {
     data: function() {
         return {
-            task: {
+            todo: {
                 title: "",
                 desc: "",
             }
         };
     },
     methods: {
-        addTask() {
-            axios.post("tasks", {
-                title: this.task.title,
-                desc: this.task.desc,
+        addTodo() {
+            axios.post("todos", {
+                title: this.todo.title,
+                desc: this.todo.desc,
                 })
                 .then(response => {
                     if (response.status == 200) {
-                        this.task.title = "";
-                        this.task.desc = "";
+                        this.todo.title = "";
+                        this.todo.desc = "";
                         this.$emit("reloadlist");
                     }
                 })

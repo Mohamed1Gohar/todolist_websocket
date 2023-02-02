@@ -11,11 +11,11 @@
         </tr>
         </thead>
         <tbody>
-        <list-task
-            :task="task"
-            v-on:taskchanged="$emit('reloadlist')"
-            v-for="task in tasks"
-            :key="task.id"
+        <list-todo
+            :todo="todo"
+            v-on:todochanged="$emit('reloadlist')"
+            v-for="todo in todos"
+            :key="todo.id"
             class=""
         />
         </tbody>
@@ -24,13 +24,13 @@
 </template>
 
 <script>
-import listTask from "./listTask.vue";
+import listTodo from "./listTodo.vue";
 
 export default {
     components: {
-        listTask
+        listTodo
     },
-    props: ["tasks"]
+    props: ["todos"]
 };
 </script>
 

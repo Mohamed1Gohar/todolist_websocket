@@ -5,19 +5,19 @@
         background-color: #146c43;
         width: 100%;
     }
-    .task {
+    .todo {
         word-break: break-all;
     }
 </style>
 
 <template>
     <tr>
-        <th scope="row">{{ task.id}}</th>
-        <th scope="row">{{ task.title}}</th>
-        <td>{{ task.desc }}</td>
+        <th scope="row">{{ todo.id}}</th>
+        <th scope="row">{{ todo.title}}</th>
+        <td>{{ todo.desc }}</td>
         <td>
             <div class="form-group">
-                <select v-model="task.status" @change="updateTask()" class="custom-select">
+                <select v-model="todo.status" @change="updateTodo()" class="custom-select">
                     <option disabled value="">Please Select</option>
                     <option value="HOLD">HOLD</option>
                     <option value="IN PROGRESS">IN PROGRESS</option>
@@ -27,22 +27,22 @@
             </div>
         </td>
         <td>
-            <button @click="removeTask()" class="btn btn-outline-danger">Trash</button>
+            <button @click="removeTodo()" class="btn btn-outline-danger">Trash</button>
         </td>
     </tr>
 
 </template>
 <script>
 export default {
-    props: ["task"],
+    props: ["todo"],
     methods: {
-        updateTask() {
-            axios.put(`tasks/${this.task.id}`, {
-                    status: this.task.status,
+        updateTodo() {
+            axios.put(`todos/${this.todo.id}`, {
+                    status: this.todo.status,
                 })
                 .then(response => {
                     if (response.status == 200) {
-                        this.$emit("taskchanged");
+                        this.$emit("todochanged");
                     }
                 })
                 .catch(error => {
@@ -52,11 +52,11 @@ export default {
                     }
                 });
         },
-        removeTask() {
-            axios.delete(`tasks/${this.task.id}`)
+        removeTodo() {
+            axios.delete(`todos/${this.todo.id}`)
                 .then(res => {
                     if (res.status == 200) {
-                        this.$emit("taskchanged");
+                        this.$emit("todochanged");
                     }
                 })
                 .catch(error => {

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\TaskReceived;
+use App\Events\TodoReceived;
 use App\Http\Requests\StoreToDoListRequest;
 use App\Http\Requests\UpdateToDoListRequest;
 use App\Models\TodoList;
@@ -19,7 +19,7 @@ class TodoListController extends Controller
      */
     public function index()
     {
-        return $this->successResponse(['tasks' => TodoList::orderBy('status')->completed(false)->get()], 'TodoList created successfully.',);
+        return $this->successResponse(['todos' => TodoList::orderBy('status')->completed(false)->get()], 'TodoList created successfully.');
     }
 
     /**
@@ -33,16 +33,16 @@ class TodoListController extends Controller
 
         $todo = $request->user()->todos()->create($request->all());
 
-        event(new TaskReceived($todo));
+        event(new TodoReceived($todo));
 
-        return $this->successResponse($todo, 'TodoList created successfully.',);
+        return $this->successResponse($todo, 'TodoList created successfully.', 201);
     }
 
     public function update(UpdateToDoListRequest $request, $id)
     {
-        $todoList = TodoList::updateTaskByStatus($id, $request->status);
+        $todoList = TodoList::updateTodoByStatus($id, $request->status);
 
-        event(new TaskReceived($todoList));
+        event(new TodoReceived($todoList));
 
         return $this->successResponse($todoList, 'TodoList updated successfully.',);
     }
@@ -51,7 +51,7 @@ class TodoListController extends Controller
     {
         $todoList = TodoList::find($id);
         if ($todoList) {
-            event(new TaskReceived($todoList));
+            event(new TodoReceived($todoList));
             $todoList->delete();
             return $this->successResponse($todoList, 'TodoList Deleted successfully.',);
         }

@@ -7,6 +7,7 @@ use App\Http\Requests\StoreToDoListRequest;
 use App\Http\Requests\UpdateToDoListRequest;
 use App\Models\TodoList;
 use App\Traits\ApiResponser;
+use Illuminate\Http\Request;
 
 class TodoListController extends Controller
 {
@@ -17,9 +18,16 @@ class TodoListController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->successResponse(['todos' => TodoList::orderBy('status')->completed(false)->get()], 'TodoList created successfully.');
+//        $todos = TodoList::all();
+//        $done = $todos;
+//        $pending = $todos;
+//        return $this->successResponse(['done' => $done, 'pending' => $pending], 'TodoList created successfully.');
+
+
+        $todos = $request->user()->todos->groupBy('completed');
+        return $this->successResponse(['done' => $todos[boolval(true)] ?? [], 'pending' => $todos[boolval(false)] ?? []], 'TodoList view successfully.');
     }
 
     /**

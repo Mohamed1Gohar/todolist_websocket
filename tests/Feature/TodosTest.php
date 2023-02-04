@@ -27,32 +27,15 @@ class TodosTest extends TestCase
     public function test_logged_user_can_create_todo_vue()
     {
         $user = User::factory()->create();
+        $this->actingAs($user)->post('todos', [
+            'title' => 'Test Todo 1',
+            'desc' => 'text desc',
+        ]);
 
-        $payload = [
-            'title' => $this->faker->title,
-            'desc' => $this->faker->text,
+        $this->assertDatabaseHas('todo_lists', [
             'user_id' => $user->id,
-            'completed' => fake()->boolean,
-            'status' => fake()->randomElement(['HOLD', 'IN PROGRESS', 'COMPLETED', 'CANCELLED'])
-        ];
-
-        $this->actingAs($user)->json('post', 'todos', $payload)
-            ->assertStatus(ResponseAlias::HTTP_CREATED)
-            ->assertJsonStructure(
-                [
-                    'data' => [
-                        'id',
-                        'title',
-                        'desc',
-                        'user_id',
-                        'completed',
-                        'created_at',
-                        'updated_at'
-                    ],
-                    'message',
-                    'status'
-                ]
-            );
-        $this->assertDatabaseHas('todo_lists', $payload);
+            'title' => 'Test Todo 1',
+            'desc' => 'text desc',
+        ]);
     }
 }

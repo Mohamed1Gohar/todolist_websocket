@@ -25,6 +25,10 @@ class TodoList extends Model
     {
         return $query->where('completed', $completed);
     }
+    public function scopeAll($query, $completed = true)
+    {
+        return $query->where('completed', $completed);
+    }
 
     public function user()
     {

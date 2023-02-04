@@ -54,8 +54,8 @@ export default {
         },
         removeTodo() {
             axios.delete(`todos/${this.todo.id}`)
-                .then(res => {
-                    if (res.status == 200) {
+                .then(response => {
+                    if (response.status == 200) {
                         this.$emit("todochanged");
                     }
                 })

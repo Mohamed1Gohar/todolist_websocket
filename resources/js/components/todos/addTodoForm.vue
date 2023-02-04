@@ -49,7 +49,7 @@ export default {
                 desc: this.todo.desc,
                 })
                 .then(response => {
-                    if (response.status == 200) {
+                    if (response.status == 201) {
                         this.todo.title = "";
                         this.todo.desc = "";
                         this.$emit("reloadlist");

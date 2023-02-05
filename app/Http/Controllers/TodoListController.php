@@ -20,14 +20,19 @@ class TodoListController extends Controller
      */
     public function index(Request $request)
     {
-//        $todos = TodoList::all();
-//        $done = $todos;
-//        $pending = $todos;
-//        return $this->successResponse(['done' => $done, 'pending' => $pending], 'TodoList created successfully.');
-
-
         $todos = $request->user()->todos->groupBy('completed');
         return $this->successResponse(['done' => $todos[boolval(true)] ?? [], 'pending' => $todos[boolval(false)] ?? []], 'TodoList view successfully.');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        return $this->successResponse(['done' => TodoList::find($id)], 'Show Todo successfully.');
     }
 
     /**

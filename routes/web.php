@@ -29,5 +29,5 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('todo-lists', 'todoLists')->name('todo-lists');
     });
 
-    Route::resource('todos', TodoListController::class, ['except' => ['create', 'edit', 'show']]);
+    Route::resource('todos', TodoListController::class, ['except' => ['create', 'edit']]);
 });

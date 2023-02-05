@@ -21,17 +21,14 @@ class TodoList extends Model
         }
         return $query->find($id)->update(['status' => $status]);
     }
+
     public function scopeCompleted($query, $completed = true)
-    {
-        return $query->where('completed', $completed);
-    }
-    public function scopeAll($query, $completed = true)
     {
         return $query->where('completed', $completed);
     }
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'id');
+        return $this->belongsTo(User::class);
     }
 }
